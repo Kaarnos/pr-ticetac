@@ -22,12 +22,13 @@ router.get('/home', function(req, res, next) {
 // POST search journey
 router.post('/search', async function(req, res, next) {
   console.log("req.body", req.body);
- 
+  
+  var dateFormat = req.body.date //+ "T00:00:00.000Z";
 
   var journeys = await JourneysModel.find({
     departure: req.body.departure,
     arrival: req.body.arrival,
-    date: req.body.date
+    date: dateFormat
   });
 
   var response = {

@@ -45,7 +45,12 @@ router.get('/', function(req, res, next){
 
 /* GET home page. */
 router.get('/', function(req, res, next){
-  res.render('homepage');
+  if(!req.session.user){
+    res.redirect('/')
+  }else{
+    res.render('homepage');
+  }
+  
 }); 
 
 

@@ -3,7 +3,7 @@ body {
   height: 100vh;
   /*padding: 50px;*/
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-color: linear-gardient(#c1c5c7, #00B7FF);
+  background: linear-gradient(#c1c5c7, #00B7FF);
 }
 
 a {

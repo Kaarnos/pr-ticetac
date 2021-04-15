@@ -15,10 +15,10 @@ mongoose.connect('mongodb+srv://admin:KOAEKXWhZ6GCe0Og@cluster0.cogwr.mongodb.ne
    options,
    function(err) {
     if (err) {
-      console.log(`error, failed to connect to the database because --> ${err}`);
-    } else {
-      console.info('*** Database Ticketac connection : Success ***');
-    }
+            console.log('erreur, failed to connect to the database ${err}'); 
+        } else {
+            console.info(' *** DB Connection Success ***');
+        }
    }
 );
 
@@ -37,10 +37,17 @@ var date = ["2018-11-20","2018-11-21","2018-11-22","2018-11-23","2018-11-24"]
 
 
 
+/* route login */
+router.get('/', function(req, res, next){
+  res.render('login');
+});  
+
+
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+router.get('/', function(req, res, next){
+  res.render('homepage');
+}); 
+
 
 
 // Remplissage de la base de donnée, une fois suffit

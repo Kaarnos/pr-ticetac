@@ -1,57 +1,105 @@
 var express = require('express');
 var router = express.Router();
 
-const mongoose = require('mongoose');
-
-// useNewUrlParser ;)
-var options = {
-  connectTimeoutMS: 5000,
-  useNewUrlParser: true,
-  useUnifiedTopology: true
- };
-
-// --------------------- BDD -----------------------------------------------------
-mongoose.connect('mongodb+srv://admin:KOAEKXWhZ6GCe0Og@cluster0.cogwr.mongodb.net/Ticketac?retryWrites=true&w=majority',
-   options,
-   function(err) {
-    if (err) {
-            console.log('erreur, failed to connect to the database ${err}'); 
-        } else {
-            console.info(' *** DB Connection Success ***');
-        }
-   }
-);
-
-var journeySchema = mongoose.Schema({
-  departure: String,
-  arrival: String,
-  date: Date,
-  departureTime: String,
-  price: Number,
-});
-
-var journeyModel = mongoose.model('journey', journeySchema);
+var JourneysModel = require('../models/journeys');
+const UsersModel = require('../models/users');
 
 var city = ["Paris","Marseille","Nantes","Lyon","Rennes","Melun","Bordeaux","Lille"]
 var date = ["2018-11-20","2018-11-21","2018-11-22","2018-11-23","2018-11-24"]
 
 
 
-/* route login */
-router.get('/', function(req, res, next){
-  res.render('login');
-});  
+/* GET login page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
 
+// GET home page
+router.get('/home', function(req, res, next) {
+  res.render('home');
+});
 
-/* GET home page. */
-router.get('/', function(req, res, next){
-  if(!req.session.user){
-    res.redirect('/')
-  }else{
-    res.render('homepage');
+// POST search journey
+router.post('/search', async function(req, res, next) {
+  console.log("req.body", req.body);
+ 
+
+  var journeys = await JourneysModel.find({
+    departure: req.body.departure,
+    arrival: req.body.arrival,
+    date: req.body.date
+  });
+
+  var response = {
+    message: "render journeys list",
+    journeys: journeys
+  };
+  res.json(response);
+})
+
+// GET select journey
+router.get('/select', async function (req, res, next) {
+  console.log("req.query", req.query);
+
+  // Get the journey from DB
+  var journey = await JourneysModel.findById(req.query.id);
+  // console.log('req.session.journeys', req.session.journeys);
+
+  if (req.session.journeysSelected) { // if there are already journeys in session
+  } else { // Else create the array journeys
+    req.session.journeysSelected = [];
   }
+  // add the journey to session
+  req.session.journeysSelected.push(journey);
+  // req.session.user = {_id: "6077fe9f17050d2410bc9f19"};
+
+  var response = {
+    message: "render My Tickets",
+    journeysSelected: req.session.journeysSelected
+  };
+  res.json(response);
+})
+
+// GET confirm journeys
+router.get('/confirm', async function(req, res, next) {
+  // console.log("req.query", req.query);
+  var user = await UsersModel.findById(req.session.user._id);
+
+  var tripsIds = user.lastTripsIds;
+  for (var i = 0 ; i < req.session.journeysSelected.length ; i++) {
+    tripsIds.push(req.session.journeysSelected[i]._id);
+  }
+
+  console.log("tripsIds", tripsIds);
+
+  await UsersModel.updateOne(
+    {_id: req.session.user._id},
+    {lastTripsIds : tripsIds}
+  );  
+
+  user = await UsersModel.findById(req.session.user._id);
   
-}); 
+
+  var response = {
+    message: "pop up: Thank you for your purchase!",
+    user: user
+  };
+  res.json(response);
+})
+
+// GET My last trips
+router.get('/last-trips', async function(req, res, next) {
+
+  var user = await UsersModel.findById(req.session.user._id).populate('lastTripsIds').exec();
+
+  var lastTrips = user.lastTripsIds;
+  
+  var response = {
+    message: "render My Last Trips",
+    lastTrips: lastTrips
+  };
+  res.json(response);
+})
 
 
 
@@ -69,7 +117,7 @@ router.get('/save', async function(req, res, next) {
 
     if(departureCity != arrivalCity){
 
-      var newUser = new journeyModel ({
+      var newUser = new JourneysModel ({
         departure: departureCity , 
         arrival: arrivalCity, 
         date: date[Math.floor(Math.random() * Math.floor(date.length))],
@@ -93,7 +141,7 @@ router.get('/result', function(req, res, next) {
   // Permet de savoir combien de trajets il y a par ville en base
   for(i=0; i<city.length; i++){
 
-    journeyModel.find( 
+    JourneysModel.find( 
       { departure: city[i] } , //filtre
   
       function (err, journey) {

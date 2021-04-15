@@ -3,13 +3,25 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var session = require('express-session');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var models = require('./routes/index')
+// var models = require('./routes/index')
 
 var app = express();
 
+// DB Connection
+require('./models/connection');
+
+// Session config
+app.use(
+  session({
+    secret: '456ds4fs6d4-65s4dfsd-s65d4f',
+    resave: false,
+    saveUninitialized: false
+  })
+);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

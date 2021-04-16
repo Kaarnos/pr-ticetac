@@ -19,10 +19,6 @@ router.get('/home', function(req, res, next) {
   res.render('home');
 });
 
-router.get('/aaa', function(req,res, next) {
-  res.render('search-result');
-})
-
 // POST search journey
 router.post('/search', async function(req, res, next) {
   console.log("req.body", req.body);

@@ -12,22 +12,38 @@ router.get('/', function(req, res, next) {
 router.post('/sign-up', async function(req, res, next) {
   console.log("req.body", req.body);
 
-  // Creation new user
-  var newUser = new UsersModel({
-    lastname: req.body.lastname,
-    firstname: req.body.firstname,
-    email: req.body.email,
-    password: req.body.password
+  var user = await UsersModel.findOne({
+    email: req.body.email
   });
 
-  // Save to DB
-  await newUser.save();
+  console.log("user", user);
 
-  // Save to session
-  req.session.user = newUser;
+  if (user === null) {
+      // Creation new user
+    var newUser = new UsersModel({
+      lastname: req.body.lastname,
+      firstname: req.body.firstname,
+      email: req.body.email,
+      password: req.body.password
+    });
 
-  // Redirect to homepage
-  res.json('redirect to home page');
+    // Save to DB
+    await newUser.save();
+
+    // Save to session
+    req.session.user = newUser;
+
+    // Redirect to homepage
+    res.redirect('/home');
+    // res.json('redirect to home page');
+    
+  } else {
+    console.log("This email address is already used");
+    // Redirect to login page
+    res.redirect('/')
+  }
+
+
 });
 
 router.post('/sign-in', async function(req, res, next) {
@@ -42,8 +58,10 @@ router.post('/sign-in', async function(req, res, next) {
   // redirections
   if (user === null) { // if user not found
     // Add a pop up "bad authentification"
-    // Redirect
-    res.json('bad authentification, redirect to login page')
+    console.log("bad authentification");
+    // Redirect to login
+    res.redirect('/');
+    // res.json('bad authentification, redirect to login page')
   } else { // if found
     // Save to session
     req.session.user = user;
@@ -51,8 +69,9 @@ router.post('/sign-in', async function(req, res, next) {
       message: 'redirect to home page',
       user: user
     };
-    // Redirect
-    res.json(response)
+    // Redirect to home page
+    res.redirect('/home');
+    // res.json(response)
   }
   
 })

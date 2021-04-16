@@ -12,27 +12,20 @@
 <body>
 
   <div class="container-fluid">
-    <div class="row">
-      <%- include('navBar'); %> 
-      <div class="col-12">
-        <p class="fs-2">One-way ticket :</p>
-      </div>
-    </div>
+    <h3>Tickets available on : <!--include ici --></h3>
+    <div class="d-flex justify-content-center-center">
+       <ul class="list-group col-md-9">
+        <li class="list-group-item d-flex justify-content-between align-items-center mb-4 mt-4">
+            <h5><b><!-- include ici--> </b></h5>
+            <p><!--Train departure a inclure ici--></p>
+            <h5><b><!--Include ici--></b></h5>
+            <!-- Display basket en href + btn "ok"-->
+             <a><!--href ici et basketHere--> <button class="btn btn-danger" type="submit">Ok</button> </a>
+        </li>
 
-    <form class="row">
-      <div class="col">
-        <input type="text" name="departure" class="form-control" placeholder="From: Paris, Marseille..." required>
-      </div>
-      <div class="col">
-        <input type="text" name="arrival" class="form-control" placeholder="To: Lille, Nantes..." required>
-      </div>
-      <div class="col">
-        <input type="date" name="date" class="form-control" id="date-input" value="2018-11-20" required>
-      </div>
-      <div class="col">
-        <button type="button" class="btn btn-danger" id="btn">Go</button>
-      </div>
-    </form>
+       </ul>
+
+    </div>
   </div>
   <%- include('footer'); %> 
   

@@ -20,7 +20,7 @@ router.get('/home', function(req, res, next) {
 });
 
 // POST search journey
-router.post('/search', async function(req, res, next) {
+router.post('/search-resultat', async function(req, res, next) {
   console.log("req.body", req.body);
  
 

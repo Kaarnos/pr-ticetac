@@ -34,6 +34,7 @@
                             <th scope="row bg-white"></th>
                             <td><!--Include--></td>
                         </tr>
+<<<<<<< HEAD
                         <tr>
                             <th scope="row">1</th>
                             <th scope="row">02/08/2021</th>
@@ -44,19 +45,50 @@
                         </tr>
                         <tr>
                             <th scope="row">2</th>
+=======
+                        
+                        <!-- <tr>
+                            <th scope="row">1</th>
+>>>>>>> 1b1c7ee58d5bbd34b8b4479b66add593df0fec56
                             <th scope="row">02/08/2021</th>
                             <th scope="row">Lyon/Lille</th>
                             <th scope="row">15:00pm</th>
                             <th scope="row">930 euros</th>
+<<<<<<< HEAD
                         </tr>
+=======
+                        </tr> -->
+                    </thead>
+                    <tbody>
+                        <!-- <tr><!-- ici inj. -->
+                            <th scope="row bg-white"></th>
+                            <td><!--Include--></td>
+
+                        </tr> -->
+                        <% var total = 0 %> 
+                        <% for (var i = 0 ; i < journeys.length ; i++) { 
+                          total += journeys[i].price %> 
+                        <tr>
+                            <th scope="row"><%= i %></th>
+                            <th scope="row"><%= journeys[i].departure %>/<%= journeys[i].arrival %></th>
+                            <th scope="row"><%= dateFormat[i] %></th>
+                            <th scope="row"><%= journeys[i].departureTime %></th>
+                            <th scope="row"><%= journeys[i].price %>€</th>
+                        </tr>
+                        <% } %> 
+>>>>>>> 1b1c7ee58d5bbd34b8b4479b66add593df0fec56
                         <tr class="table table-danger">
                             <th>Total  :</th>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
+<<<<<<< HEAD
                             <td>1860 $</td>
                             <td></td>
+=======
+                            <td><%= total %>€</td>
+>>>>>>> 1b1c7ee58d5bbd34b8b4479b66add593df0fec56
                         </tr>
 
                         
@@ -66,7 +98,7 @@
         </div>
 
         
-        <a href="/home"><button type="button"class="btn btn-danger" id="btnTrips">Confirmez</button> </a>
+        <a href="/confirm"><button type="button"class="btn btn-danger" id="btnTrips">Confirmez</button> </a>
 
 
     

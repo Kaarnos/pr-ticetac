@@ -38,7 +38,7 @@
         <div class="fs-6 fw-bold"><%= journeys[i].departure %> / <%= journeys[i].arrival %> </div>
         <div class="text-secondary">train departure at : <%= journeys[i].departureTime %></div>
         <div class="fs-5 fw-bold"><%= journeys[i].price %> €</div>
-        <button class="btn btn-danger">OK</button>
+        <a href="/select?id=<%= journeys[i]._id %>"><button class="btn btn-danger">OK</button></a>
       </div>
     </div>
     <% } %> 

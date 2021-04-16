@@ -20,47 +20,23 @@ router.get('/home', function(req, res, next) {
 });
 
 
-// GET search TEST *****************
-router.get('/search-result', function(req, res, next){
-  res.render('search-resultat')
-});
-
-// GET BasketItem *** ** *   o]---}
-router.get('/bas_Item', function(req, res, next){
-  res.render('basketItem')
-})
-
-// GET Basket User ********
-router.get('/orders', function(req,res, next){
-  res.render('orders-history')
-});
-router.get('/aaa', function(req,res, next) {
-  res.render('search-result');
-})
-
 // POST search journey
 router.post('/search', async function(req, res, next) {
   console.log("req.body", req.body);
-
-
   
   // var dateFormat = req.body.date //+ "T00:00:00.000Z";
 
+  // Cherche les voyage correspondants
   var journeys = await JourneysModel.find({
     departure: req.body.departure,
     arrival: req.body.arrival,
     date: req.body.date
   });
 
+  //Mise en forme de la date
   var dateArray = req.body.date.split('-')
   var dateFormat = dateArray[2] + "/" + dateArray[1];
 
-  // var response = {
-  //   message: "render journeys list",
-  //   journeys: journeys
-  // };
-
-  // res.json(response);
   console.log("journeys", journeys);
 
   res.render('search-result', {
@@ -75,7 +51,6 @@ router.get('/select', async function (req, res, next) {
 
   // Get the journey from DB
   var journey = await JourneysModel.findById(req.query.id);
-  // console.log('req.session.journeys', req.session.journeys);
 
   if (req.session.journeysSelected) { // if there are already journeys in session
   } else { // Else create the array journeys
@@ -83,20 +58,32 @@ router.get('/select', async function (req, res, next) {
   }
   // add the journey to session
   req.session.journeysSelected.push(journey);
-  // req.session.user = {_id: "6077fe9f17050d2410bc9f19"};
 
-  var response = {
-    message: "render My Tickets",
-    journeysSelected: req.session.journeysSelected
-  };
-  res.json(response);
+  // mettre l'information dans une variable
+  var journeys = req.session.journeysSelected;
+  console.log("journeys", journeys);
+
+  var dateFormat = [];
+  for (var i = 0 ; i < journeys.length ; i++) {
+    var date = journeys[i].date;
+    var month = date.getMonth()+1;
+    dateFormat.push(date.getDate() + "/" + month + "/" + date.getFullYear());
+    console.log("dateFormat", dateFormat);
+  }
+
+  res.render('basketItem', {
+    journeys,
+    dateFormat
+  })
 })
 
 // GET confirm journeys
 router.get('/confirm', async function(req, res, next) {
-  // console.log("req.query", req.query);
+
+  // Récupérer l'user
   var user = await UsersModel.findById(req.session.user._id);
 
+  // Récupère les trajets déjà effectués et ajoute les nouveaux confirmés
   var tripsIds = user.lastTripsIds;
   for (var i = 0 ; i < req.session.journeysSelected.length ; i++) {
     tripsIds.push(req.session.journeysSelected[i]._id);
@@ -104,31 +91,26 @@ router.get('/confirm', async function(req, res, next) {
 
   console.log("tripsIds", tripsIds);
 
+  //Update le bdd avec des nouveaux trajets et les anciens
   await UsersModel.updateOne(
     {_id: req.session.user._id},
     {lastTripsIds : tripsIds}
   );  
 
-  user = await UsersModel.findById(req.session.user._id);
-  
-
-  var response = {
-    message: "pop up: Thank you for your purchase!",
-    user: user
-  };
-  res.json(response);
-})
+  // user = await UsersModel.findById(req.session.user._id);
+  // Il faudrait mettre une pop up à cet endroit
+  res.redirect('/home');
+});
 
 // GET My last trips
 router.get('/last-trips', async function(req, res, next) {
 
-  // var user = await UsersModel.findById(req.session.user._id).populate('lastTripsIds').exec();
-  var user = await UsersModel.findById('60783cbfbafc240850956d89').populate('lastTripsIds').exec();
-
-  
+  // récupérer les voyages déjà effectué depuis la bdd
+  var user = await UsersModel.findById(req.session.user._id).populate('lastTripsIds').exec();
+  // var user = await UsersModel.findById('60783cbfbafc240850956d89').populate('lastTripsIds').exec();
   var lastTrips = user.lastTripsIds;
 
-  // console.log("lastTrips", lastTrips);
+  // Mise en forme de la date
   var dateFormat = [];
   for (var i = 0 ; i < lastTrips.length ; i++) {
     var date = lastTrips[i].date;
@@ -137,16 +119,10 @@ router.get('/last-trips', async function(req, res, next) {
     console.log("dateFormat", dateFormat);
     // lastTrips[i].dateFormat = dateFormat;
   }
-  // var date = lastTrips.date;
 
-  // var dateFormat = 
-  
   console.log("lastTrips", lastTrips);
-  // var response = {
-  //   message: "render My Last Trips",
-  //   lastTrips: lastTrips
-  // };
-  // res.json(response);
+
+  // Renvoie la page
   res.render('orders-history', {
     lastTrips,
     dateFormat

@@ -19,8 +19,18 @@ router.get('/home', function(req, res, next) {
   res.render('home');
 });
 
+// GET search TEST *****************
+router.get('/search', function(req, res, next){
+  res.render('search-resultat')
+});
+
+// GET Basket User ********
+router.get('/basket', function(req,res, next){
+  res.render('user-basket')
+});
+
 // POST search journey
-router.post('/search-resultat', async function(req, res, next) {
+router.post('/search', async function(req, res, next) {
   console.log("req.body", req.body);
  
 

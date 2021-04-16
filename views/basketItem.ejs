@@ -47,7 +47,7 @@
                         <tr>
                             <th scope="row"><%= i %></th>
                             <th scope="row"><%= journeys[i].departure %>/<%= journeys[i].arrival %></th>
-                            <th scope="row"><%= journeys[i].date %></th>
+                            <th scope="row"><%= dateFormat[i] %></th>
                             <th scope="row"><%= journeys[i].departureTime %></th>
                             <th scope="row"><%= journeys[i].price %>€</th>
                         </tr>
@@ -68,7 +68,7 @@
         </div>
 
         
-        <a href="/home"><button type="button"class="btn btn-danger" id="btnTrips">Confirmez</button> </a>
+        <a href="/confirm"><button type="button"class="btn btn-danger" id="btnTrips">Confirmez</button> </a>
 
 
     

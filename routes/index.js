@@ -19,23 +19,39 @@ router.get('/home', function(req, res, next) {
   res.render('home');
 });
 
+router.get('/aaa', function(req,res, next) {
+  res.render('search-result');
+})
+
 // POST search journey
 router.post('/search', async function(req, res, next) {
   console.log("req.body", req.body);
+
+
   
-  var dateFormat = req.body.date //+ "T00:00:00.000Z";
+  // var dateFormat = req.body.date //+ "T00:00:00.000Z";
 
   var journeys = await JourneysModel.find({
     departure: req.body.departure,
     arrival: req.body.arrival,
-    date: dateFormat
+    date: req.body.date
   });
 
-  var response = {
-    message: "render journeys list",
-    journeys: journeys
-  };
-  res.json(response);
+  var dateArray = req.body.date.split('-')
+  var dateFormat = dateArray[2] + "/" + dateArray[1];
+
+  // var response = {
+  //   message: "render journeys list",
+  //   journeys: journeys
+  // };
+
+  // res.json(response);
+  console.log("journeys", journeys);
+
+  res.render('search-result', {
+    journeys,
+    dateFormat
+  })
 })
 
 // GET select journey

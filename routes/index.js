@@ -20,7 +20,7 @@ router.get('/home', function(req, res, next) {
 });
 
 // GET search TEST *****************
-router.get('/search', function(req, res, next){
+router.get('/search-result', function(req, res, next){
   res.render('search-resultat')
 });
 
@@ -28,11 +28,17 @@ router.get('/search', function(req, res, next){
 router.get('/basket', function(req,res, next){
   res.render('user-basket')
 });
+router.get('/aaa', function(req,res, next) {
+  res.render('search-result');
+})
 
 // POST search journey
 router.post('/search', async function(req, res, next) {
   console.log("req.body", req.body);
- 
+
+
+  
+  // var dateFormat = req.body.date //+ "T00:00:00.000Z";
 
   var journeys = await JourneysModel.find({
     departure: req.body.departure,
@@ -40,11 +46,21 @@ router.post('/search', async function(req, res, next) {
     date: req.body.date
   });
 
-  var response = {
-    message: "render journeys list",
-    journeys: journeys
-  };
-  res.json(response);
+  var dateArray = req.body.date.split('-')
+  var dateFormat = dateArray[2] + "/" + dateArray[1];
+
+  // var response = {
+  //   message: "render journeys list",
+  //   journeys: journeys
+  // };
+
+  // res.json(response);
+  console.log("journeys", journeys);
+
+  res.render('search-result', {
+    journeys,
+    dateFormat
+  })
 })
 
 // GET select journey

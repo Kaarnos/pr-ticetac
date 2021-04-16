@@ -10,6 +10,7 @@
 </head>
 <body>
   <div class="container">
+    <%- include('navBar'); %>
 
     <% if (journeys.length === 0) { %>
       <div class="row">
@@ -43,6 +44,6 @@
     <% } %> 
 
   </div>
-  
+  <%- include('footer'); %> 
 </body>
 </html>

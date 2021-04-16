@@ -25,6 +25,11 @@ router.get('/search-result', function(req, res, next){
   res.render('search-resultat')
 });
 
+// GET BasketItem *** ** *   o]---}
+router.get('/bas_Item', function(req, res, next){
+  res.render('basketItem')
+})
+
 // GET Basket User ********
 router.get('/basket', function(req,res, next){
   res.render('user-basket')

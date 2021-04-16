@@ -11,12 +11,12 @@
 </head>
 
 <body class="d-flex flex-column justify-content-between">
-
+  <%- include('navBar'); %> 
   <div class="container-fluid">
     <div class="row">
-      <%- include('navBar'); %> 
+      
       <div class="col-12">
-        <p class="fs-2">One-way ticket :</p>
+        <p class="fs-2 text-white">One-way ticket :</p>
       </div>
     </div>
 
@@ -34,7 +34,12 @@
         <button type="submit" class="btn btn-danger" id="btn">Go</button>
       </div>
     </form>
+
+    <div class="d-flex justify-content-center mt-5">
+      <img id="imgBackground" src="./images/landmark.png">
+    </div>
   </div>
+
   <%- include('footer'); %> 
   
   

@@ -26,6 +26,18 @@ a {
   color: #c80000;
   margin-right: 10px; 
   font-weight: bold;
+  text-decoration: none;
+}
+
+.btn-nav-trips{
+  text-decoration: none;
+  color:black;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.btnTrips{
+  margin-right: 10px;
 }
 
 

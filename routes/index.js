@@ -31,8 +31,8 @@ router.get('/bas_Item', function(req, res, next){
 })
 
 // GET Basket User ********
-router.get('/basket', function(req,res, next){
-  res.render('user-basket')
+router.get('/orders', function(req,res, next){
+  res.render('orders-history')
 });
 router.get('/aaa', function(req,res, next) {
   res.render('search-result');
@@ -122,15 +122,35 @@ router.get('/confirm', async function(req, res, next) {
 // GET My last trips
 router.get('/last-trips', async function(req, res, next) {
 
-  var user = await UsersModel.findById(req.session.user._id).populate('lastTripsIds').exec();
+  // var user = await UsersModel.findById(req.session.user._id).populate('lastTripsIds').exec();
+  var user = await UsersModel.findById('60783cbfbafc240850956d89').populate('lastTripsIds').exec();
 
-  var lastTrips = user.lastTripsIds;
   
-  var response = {
-    message: "render My Last Trips",
-    lastTrips: lastTrips
-  };
-  res.json(response);
+  var lastTrips = user.lastTripsIds;
+
+  // console.log("lastTrips", lastTrips);
+  var dateFormat = [];
+  for (var i = 0 ; i < lastTrips.length ; i++) {
+    var date = lastTrips[i].date;
+    var month = date.getMonth()+1;
+    dateFormat.push(date.getDate() + "/" + month + "/" + date.getFullYear());
+    console.log("dateFormat", dateFormat);
+    // lastTrips[i].dateFormat = dateFormat;
+  }
+  // var date = lastTrips.date;
+
+  // var dateFormat = 
+  
+  console.log("lastTrips", lastTrips);
+  // var response = {
+  //   message: "render My Last Trips",
+  //   lastTrips: lastTrips
+  // };
+  // res.json(response);
+  res.render('orders-history', {
+    lastTrips,
+    dateFormat
+  })
 })
 
 

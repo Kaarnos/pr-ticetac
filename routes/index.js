@@ -84,12 +84,16 @@ router.get('/select', async function (req, res, next) {
   // add the journey to session
   req.session.journeysSelected.push(journey);
   // req.session.user = {_id: "6077fe9f17050d2410bc9f19"};
+  console.log(req.session.journeysSelected);
 
-  var response = {
-    message: "render My Tickets",
-    journeysSelected: req.session.journeysSelected
-  };
-  res.json(response);
+  // var response = {
+  //   message: "render My Tickets",
+  //   journeysSelected: req.session.journeysSelected
+  // };
+  // res.json(response);
+  res.render('basketItem', {
+    journeys: req.session.journeysSelected
+  })
 })
 
 // GET confirm journeys

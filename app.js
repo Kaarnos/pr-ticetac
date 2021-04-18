@@ -7,12 +7,20 @@ var session = require('express-session');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var models = require('./routes/index')
+// DB Connection
+require('./models/connection');
 
 var app = express();
 
-// DB Connection
-require('./models/connection');
+app.locals.getFormatDate = function(date) {
+  var newDate = new Date(date);
+  var day = newDate.getDate();
+  var month = newDate.getMonth() + 1;
+  var year = newDate.getFullYear();
+  var formatDate = day + '/' + month + '/' + year;
+  return formatDate;
+}
+
 
 // Session config
 app.use(

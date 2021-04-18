@@ -13,14 +13,16 @@
 <body class="d-flex flex-column justify-content-between">
     <!-- NavBar a inclure -->
     
+
     <div class="container-fluid">
-      <%- include('navBar'); %> 
+      <%- include('navbar'); %> 
+      
         
         <div class='row'>
 
                             <!-- **SIGN-IN**  -->
             <div class="offset-1 col-10 offset-lg-4 col-lg-2 mt-5 text-center">
-                <h1 class="text-white index-title">sign In: </h1>
+                <h1 class="text-white index-title">Sign-in : </h1>
 
                                       <!--email-->
                 <form action="/users/sign-in" method="POST">
@@ -34,25 +36,25 @@
                         <input type="password" class="form-control" name="password" placeholder="Password" required>
                     </div>
                                       <!-- Btn-->
-                    <button type="submit" class="btn btn-danger mt-2">Confirmez</button>
+                    <button type="submit" class="btn btn-danger mt-3">Confirm</button>
                 </form>
 
             </div>
 
                             <!-- ** SIGN-AREA ** -->
             <div class="offset-1 col-10 offset-lg-0 col-lg-2 text-center mt-5 mt-lg-5">
-                <h1 class="text-white index-title">Sign up:</h1>
+                <h1 class="text-white index-title">Sign-up :</h1>
 
                             <!-- Input >name >firstname >email >psw-->
                 <form action="/users/sign-up" method="POST">
                     <div class="form-group">
                         <label for="exampleInputPassword"></label>
-                        <input type="text" class="form-control" name="lastname" placeholder="lastName" required>
+                        <input type="text" class="form-control" name="lastname" placeholder="Last Name" required>
                     </div>
 
                     <div class="form-group">
                         <label for="exampleInputPassword"></label>
-                        <input type="text" class="form-control" name="firstname" placeholder="Firstname" required>
+                        <input type="text" class="form-control" name="firstname" placeholder="First Name" required>
                     </div>
 
                     <div class="form-group">
@@ -64,7 +66,7 @@
                         <label for="exampleInputPassword1"></label>
                         <input type="password" class="form-control" name="password" placeholder="Password" required>
                     </div>
-                    <button type="submit" class="btn btn-danger">Confirmez</button>
+                    <button type="submit" class="btn btn-danger mt-3">Confirm</button>
                 
                 </form>
 

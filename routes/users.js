@@ -73,7 +73,12 @@ router.post('/sign-in', async function(req, res, next) {
     res.redirect('/home');
     // res.json(response)
   }
-  
+});
+
+router.get('/logout', function(req, res, next) {
+  req.session.destroy();
+  console.log("session", req.session);
+  res.redirect('/');
 })
 
 

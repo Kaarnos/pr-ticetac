@@ -1,9 +1,13 @@
+body, html {
+  height: 100%;
+}
+
 body {
   margin: 0;
-  height: 100vh;
+  /* height: 100vh; */
   /*padding: 50px;*/
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background: linear-gradient(#c1c5c7, #00B7FF);
+  background: linear-gradient(#c5dee9, #2e80b3);
 }
 
 a {
@@ -40,5 +44,8 @@ a {
   margin-right: 10px;
 }
 
+#img-bg {
+  max-width: 300px;
+}
 
 

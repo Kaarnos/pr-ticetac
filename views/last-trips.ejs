@@ -11,10 +11,18 @@
 </head>
 <body class="d-flex flex-column justify-content-between">
     <div class="container-fluid">
-        <%- include('navBar'); %>
-        <h3>My last Trips :</h3>
+        <%- include('navbar'); %>
 
-        <table class="table mt-5 table-borderless table-light" id="table-users">
+
+        <div class="row mt-3">
+            <div class="col-12">
+              <div class="fs-2 text-white">
+                My tickets : 
+              </div>
+            </div>
+        </div>
+
+        <table class="table mt-2 table-borderless table-light" id="table-users">
             <thead>
                 <tr>  <!-- -->
                     <th scope="col">Date</th>
@@ -27,10 +35,10 @@
             <tbody>
               <% for (var i = 0 ; i < lastTrips.length ; i++) { %> 
                 <tr>
-                    <th scope="row"><%= dateFormat[i] %></th>
-                    <th scope="row"><%= lastTrips[i].departure %>/<%= lastTrips[i].arrival %></th>
-                    <th scope="row"><%= lastTrips[i].departureTime %></th>
-                    <th scope="row"><%= lastTrips[i].price %> €</th>
+                    <td scope="row"><%= getFormatDate(lastTrips[i].date) %></td>
+                    <td><%= lastTrips[i].departure %>/<%= lastTrips[i].arrival %></td>
+                    <td><%= lastTrips[i].departureTime %></td>
+                    <td><%= lastTrips[i].price %> €</td>
                 </tr>
               <% } %>
 
@@ -57,8 +65,9 @@
         <a href="/home"><button type="button"class="btn btn-danger" id="btnTrips">Home</button> </a>
 
 
-        <%- include('footer'); %> 
+        
     </div>
+    <%- include('footer'); %> 
     
 </body>
 </html>
